@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "name": "mini-starter",
+  "app": { "api": "apps/api", "web": "apps/web", "packageRoot": "com.forge.starter" },
+  "env": {
+    "example": "env.example",
+    "local": ".env.local"
+  },
+  "exclude": [
+    "docs/maintainers/**"
+  ],
+  "conditional": [
+    "pom.xml",
+    "apps/api/pom.xml",
+    "apps/api/src/main/resources/application.yml",
+    "infra/compose.yaml",
+    "env.example",
+    "package.json",
+    "README.md"
+  ],
+  "modules": {
+    "auth": {
+      "default": "jwt",
+      "options": {
+        "jwt": {
+          "files": [
+            "apps/api/src/main/java/com/forge/starter/auth/**",
+            "apps/web/middleware.ts"
+          ],
+          "maven": {
+            "apps/api/pom.xml": [
+              "org.springframework.boot:spring-boot-starter-security",
+              "io.jsonwebtoken:jjwt-api"
+            ]
+          },
+          "env": [
+            "JWT_SECRET",
+            "JWT_ACCESS_TTL"
+          ],
+          "requires": {}
+        },
+        "none": {
+          "files": [],
+          "maven": {},
+          "env": []
+        }
+      }
+    },
+    "email": {
+      "default": "smtp",
+      "options": {
+        "smtp": {
+          "files": [],
+          "maven": {
+            "apps/api/pom.xml": [
+              "org.springframework.boot:spring-boot-starter-mail"
+            ]
+          },
+          "env": [
+            "SMTP_HOST",
+            "SMTP_PORT"
+          ]
+        },
+        "resend": {},
+        "none": {}
+      }
+    },
+    "frontend": {
+      "default": "next",
+      "options": {
+        "next": {
+          "files": [
+            "apps/web/**",
+            "pnpm-workspace.yaml"
+          ]
+        },
+        "none": {}
+      }
+    },
+    "deploy": {
+      "default": "docker",
+      "options": {
+        "docker": {
+          "files": [
+            "apps/api/Dockerfile",
+            "infra/compose.prod.yaml"
+          ]
+        }
+      }
+    }
+  }
+}

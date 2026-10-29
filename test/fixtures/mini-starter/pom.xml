@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.forge.starter</groupId>
+  <artifactId>mini-starter-parent</artifactId>
+  <version>0.1.0</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>apps/api</module>
+  </modules>
+  <!-- forge:if starter-repository -->
+  <properties>
+    <starter.release.plugin>true</starter.release.plugin>
+  </properties>
+  <!-- forge:end -->
+</project>

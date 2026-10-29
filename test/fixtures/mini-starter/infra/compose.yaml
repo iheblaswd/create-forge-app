@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+# forge:if email=smtp|resend
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"
+# forge:end

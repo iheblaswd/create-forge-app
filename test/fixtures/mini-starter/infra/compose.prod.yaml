@@ -1,0 +1,3 @@
+services:
+  api:
+    image: ghcr.io/forge/mini-starter-api:latest
