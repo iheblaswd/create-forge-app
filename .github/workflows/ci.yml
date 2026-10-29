@@ -1,0 +1,49 @@
+# CI for create-forge-app (FORGE-8).
+# Runs lint, typecheck and unit tests on every PR and on main.
+# Free tier: public repo, GitHub Actions, ubuntu-latest.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel superseded runs on the same ref (PR branch or main).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # pnpm version comes from "packageManager" in package.json (corepack reads it).
+      - name: Enable corepack (pnpm from package.json packageManager)
+        run: corepack enable
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm check
+
+      - name: Test
+        run: pnpm test
