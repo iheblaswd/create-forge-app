@@ -1,0 +1,43 @@
+{
+  "name": "create-forge-app",
+  "version": "0.0.0",
+  "description": "Generate a production-ready Spring Boot 3 (modulith, clean architecture) + Next.js 15 app with only the modules you choose, and keep it up to date.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "create-forge-app": "bin/create.mjs"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "template",
+    "template.lock.json"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.34.9",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "tsc --noEmit",
+    "lint": "eslint .",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "commander": "^14.0.0",
+    "fast-xml-parser": "^5.2.5",
+    "node-diff3": "^3.1.2",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/node": "^22.17.0",
+    "eslint": "^9.33.0",
+    "globals": "^16.5.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0",
+    "vitest": "^3.2.4"
+  }
+}
