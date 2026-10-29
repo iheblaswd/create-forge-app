@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: mini-starter
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mini_starter
+# forge:if email=smtp
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+# forge:end
+# forge:if auth!=none
+app:
+  security:
+    public-paths: /api/health,/api/auth/**
+# forge:end
+server:
+  port: 8080

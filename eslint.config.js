@@ -26,7 +26,8 @@ const IO_MODULES = [
 const ioPatterns = IO_MODULES.flatMap((m) => [m, `node:${m}`, `${m}/*`, `node:${m}/*`]);
 
 export default tseslint.config(
-  { ignores: ["node_modules/**", "dist/**", "template/**", "coverage/**"] },
+  // test/fixtures/** holds fake starters: their TS/TSX files are data, never built nor linted.
+  { ignores: ["node_modules/**", "dist/**", "template/**", "coverage/**", "test/fixtures/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   { languageOptions: { globals: globals.node } },
