@@ -231,6 +231,9 @@ describe("evaluateCondition(condition, selection) — CLAUDE.md 4.4 syntax", () 
   });
 });
 
+// First ESLint boot (config + typescript-eslint) takes 2-3 s on a cold cache under parallel load.
+const ESLINT_TIMEOUT_MS = 20_000;
+
 describe("AC7: src/core/planner performs no I/O", () => {
   it("passes the no-restricted-imports rule on every planner source file", async () => {
     const cwd = join(import.meta.dirname, "..", "..");
@@ -238,5 +241,5 @@ describe("AC7: src/core/planner performs no I/O", () => {
     const results = await eslint.lintFiles(["src/core/planner/**/*.ts"]);
     expect(results.length).toBeGreaterThan(0);
     expect(results.flatMap((r) => r.messages.map((m) => `${r.filePath}: ${m.message}`))).toEqual([]);
-  });
+  }, ESLINT_TIMEOUT_MS);
 });
