@@ -144,25 +144,25 @@ Layout:
 
 ```
 bin/create.mjs            entry point
-src/cli/                  commander, prompts, output (banner, plan summary, errors)
+src/cli/                  commander, prompts, output (placeholder, Étape 2)
 src/core/manifest/        forge.template.json loading + zod validation
-src/core/sources/         bundled | local dir (--template-dir) | github (--ref)
+src/core/sources/         bundled | local dir (--template-dir) | github (--ref) (placeholder, Étape 2)
 src/core/selection/       flags + defaults + requires → Selection
 src/core/planner/         manifest + selection + file list → Plan (pure)
-src/core/apply/           executes a Plan (Étape 2)
-src/core/merge/           three-way merge for upgrade / add / remove (Étape 5)
-src/steps/                git init, pnpm install, mvn dependency:resolve
-src/utils/                fs, process, naming, hashing
-scripts/bundle-template.mjs   bundles the pinned starter release (Étape 3)
+src/core/apply/           executes a Plan (placeholder, Étape 2)
+src/core/merge/           three-way merge for upgrade / add / remove (placeholder, Étape 5)
+src/steps/                git init, pnpm install, mvn dependency:resolve (placeholder, Étape 2)
+src/utils/                fs, process, naming, hashing (placeholder, Étape 2)
+scripts/bundle-template.mjs   bundles the pinned starter release (does not exist yet, Étape 3)
 test/unit/                planner, selection, manifest — no disk access
 test/fixtures/mini-starter/   ~15-file fake starter used by the tests
-test/integration/         real generation runs (Étape 2)
+test/integration/         real generation runs (placeholder, Étape 2)
 ```
 
 Rules:
 
 - **No I/O in `src/core/*` except `src/core/sources`.** Enforced by ESLint
-  (`eslint.config.js`) and a dedicated test.
+  (`eslint.config.js`) and a dedicated test (`test/unit/lint-no-io-in-core.test.ts`).
 - TDD: the test comes first, nothing merges without one. CI (`lint`, `check`, `test`) must be
   green on every PR.
 - Conventional Commits (`feat(planner): …`, `fix(apply): …`, `docs: …`), one branch per task,
