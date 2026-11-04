@@ -56,7 +56,9 @@ describe("mini-starter fixture (CLAUDE.md 4.4 / 4.5)", () => {
     expect(manifest.modules.email?.default).toBe("smtp");
     expect(manifest.modules.frontend?.default).toBe("next");
     expect(manifest.modules.deploy?.default).toBe("docker");
-    expect(manifest.exclude.length).toBeGreaterThan(0);
+    // A starter never ships its own manifest: the fixture mirrors the convention the real starter must follow.
+    expect(manifest.exclude).toContain(MANIFEST_FILE);
+    expect(existsSync(join(FIXTURE, MANIFEST_FILE))).toBe(true);
     expect(manifest.conditional.length).toBeGreaterThan(0);
     expect(manifest.modules.auth?.options.jwt?.maven["apps/api/pom.xml"]?.length).toBeGreaterThan(0);
     expect(manifest.modules.auth?.options.jwt?.env.length).toBeGreaterThan(0);
