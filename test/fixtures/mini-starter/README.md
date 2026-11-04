@@ -13,7 +13,7 @@ This section exists only in the starter repository and is always removed by the 
 
 | File | Owner | Why it is here |
 | --- | --- | --- |
-| `forge.template.json` | manifest | schema 1 manifest: 4 modules, exclude, conditional, maven, env |
+| `forge.template.json` | manifest, excluded | schema 1 manifest: 4 modules, exclude, conditional, maven, env. Listed in its own `exclude`: the starter never ships its own manifest into a generated project |
 | `README.md` | always (conditional) | `starter-repository` block in an XML comment |
 | `package.json` | always (conditional) | plain conditional file, no block |
 | `pom.xml` | always (conditional) | parent pom with a `starter-repository` XML block |
@@ -37,4 +37,8 @@ Expected results per combination (used by the planner snapshots):
   the `spring-boot-starter-security` and `jjwt-api` dependencies, `JWT_*` variables.
 - `email=none`: drops the `email=smtp` and `email=smtp|resend` blocks, `spring-boot-starter-mail`, `SMTP_*`.
 - `frontend=none`: drops `apps/web/**` and `pnpm-workspace.yaml`.
-- `starter-repository` blocks and `docs/maintainers/**` are always removed.
+- `starter-repository` blocks, `docs/maintainers/**` and `forge.template.json` are always removed.
+
+Convention: the CLI hardcodes no file name (CLAUDE.md section 1), so the manifest must exclude
+itself. The real `forge-starter` manifest must list `forge.template.json` under `exclude` exactly
+like this fixture does.
