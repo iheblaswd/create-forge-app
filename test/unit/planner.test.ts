@@ -1,6 +1,7 @@
 import { ESLint } from "eslint";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import picomatch from "picomatch";
 import { describe, expect, it } from "vitest";
 import { parseManifest, type Manifest } from "../../src/core/manifest/index.js";
 import { evaluateCondition, plan, type Plan, type PlanInput } from "../../src/core/planner/index.js";
@@ -40,8 +41,13 @@ describe("plan(input) — mini-starter (CLAUDE.md 4.3 / 4.4 / 4.5)", () => {
     const input = miniStarterInput();
     const result = plan(input);
 
-    const expected = input.templateFiles.filter((f) => !f.startsWith("docs/maintainers/")).sort();
+    // The copy list is the fixture tree minus the manifest's exclude globs (docs/maintainers/**
+    // and the manifest itself: a starter never ships its own forge.template.json).
+    const excluded = picomatch(input.manifest.exclude, { dot: true });
+    const expected = input.templateFiles.filter((f) => !excluded(f)).sort();
     expect(copied(result)).toEqual(expected);
+    expect(copied(result)).not.toContain(MANIFEST_FILE);
+    expect(copied(result).some((f) => f.startsWith("docs/maintainers/"))).toBe(false);
     expect(result.copy.every((c) => c.from === c.to)).toBe(true);
 
     const conditionalFiles = input.manifest.conditional.sort();
@@ -103,6 +109,20 @@ describe("plan(input) — mini-starter (CLAUDE.md 4.3 / 4.4 / 4.5)", () => {
     expect(files).toContain("apps/api/pom.xml");
     expect(result.postSteps).toContain("mvn-resolve");
     expect(keepFor(result, "package.json")).toContain("frontend=none");
+  });
+
+  it("FORGE-16: forge.template.json is never copied, whatever the selection", () => {
+    const selections: Selection[] = [
+      DEFAULTS,
+      { ...DEFAULTS, auth: "none" },
+      { ...DEFAULTS, frontend: "none" },
+      { auth: "none", email: "none", frontend: "none", deploy: "docker" },
+    ];
+    for (const selection of selections) {
+      const input = miniStarterInput(selection);
+      expect(input.templateFiles).toContain(MANIFEST_FILE);
+      expect(copied(plan(input)), JSON.stringify(selection)).not.toContain(MANIFEST_FILE);
+    }
   });
 
   it("AC2b: email=none removes smtp coords and the email=smtp|resend alternative is not kept", () => {
