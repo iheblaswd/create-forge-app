@@ -30,33 +30,23 @@ export function evaluateCondition(condition: string, selection: Selection): bool
   return operator === "=" ? holds : !holds;
 }
 
-/** Every subset of `options` (manifest order, size >= 2) that contains `selected`, joined by "|". */
-function alternativesContaining(options: readonly string[], selected: string): string[] {
-  const result: string[] = [];
-  const count = options.length;
-  for (let mask = 1; mask < 1 << count; mask++) {
-    const subset = options.filter((_, i) => mask & (1 << i));
-    if (subset.length >= 2 && subset.includes(selected)) result.push(subset.join("|"));
-  }
-  return result;
-}
-
 /**
- * All conditions that hold for the selection, in manifest order: for each module,
- * `<m>=<selected>`, every `<m>=<a>|<b>...` alternative (manifest order) containing the
- * selected option, then `<m>!=<o>` for every non-selected option.
- * `starter-repository` is never listed. Files must write alternatives in manifest order;
- * `evaluateCondition` is the normative evaluator for anything else.
+ * The plain fact list of the selection, in manifest order: for each module `<m>=<selected>`,
+ * then `<m>!=<o>` for every non-selected option. `starter-repository` and `a|b` alternatives
+ * are never listed.
+ *
+ * keep[] is informational (for `--dry-run` output and Plan snapshots). It is NOT how blocks are
+ * decided: `apply` evaluates each `forge:if` marker with
+ * `evaluateCondition(cond, plan.projectJson.modules)`, the normative evaluator, so any spelling
+ * of alternatives (`email=smtp|resend`, `email=resend|smtp`) gives the same result as --dry-run.
  */
 export function keptConditions(manifest: Manifest, selection: Selection): string[] {
   const keep: string[] = [];
   for (const [module, mod] of Object.entries(manifest.modules)) {
     const selected = selection[module];
     if (selected === undefined) throw new Error(`selection has no option for module "${module}"`);
-    const options = Object.keys(mod.options);
     keep.push(`${module}=${selected}`);
-    for (const alt of alternativesContaining(options, selected)) keep.push(`${module}=${alt}`);
-    for (const option of options) {
+    for (const option of Object.keys(mod.options)) {
       if (option !== selected) keep.push(`${module}!=${option}`);
     }
   }

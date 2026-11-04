@@ -22,7 +22,12 @@ export interface CopyEntry {
 
 export interface ConditionalEntry {
   file: string;
-  /** Conditions that hold for the selection, in the syntax the files use (CLAUDE.md 4.4). */
+  /**
+   * Fact list of the selection (`<m>=<selected>`, `<m>!=<other>`, manifest order), in the
+   * syntax the files use (CLAUDE.md 4.4). Informational only (--dry-run, snapshots): apply
+   * decides each `forge:if` marker with `evaluateCondition(cond, plan.projectJson.modules)`,
+   * which also handles `a|b` alternatives in any order.
+   */
   keep: string[];
 }
 
