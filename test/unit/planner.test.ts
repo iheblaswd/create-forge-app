@@ -46,16 +46,16 @@ describe("plan(input) — mini-starter (CLAUDE.md 4.3 / 4.4 / 4.5)", () => {
 
     const conditionalFiles = input.manifest.conditional.sort();
     expect(result.conditional.map((c) => c.file).sort()).toEqual(conditionalFiles);
+    // keep[] is the plain fact list of the selection (manifest order), informational for --dry-run.
+    const facts = ["auth=jwt", "auth!=none", "email=smtp", "email!=resend", "email!=none", "frontend=next", "frontend!=none", "deploy=docker"];
     for (const file of conditionalFiles) {
       const keep = keepFor(result, file);
-      expect(keep, file).toEqual(
-        expect.arrayContaining(["auth=jwt", "auth!=none", "email=smtp", "email!=none", "email!=resend", "frontend=next", "frontend!=none", "deploy=docker"]),
-      );
-      expect(keep).not.toContain("starter-repository");
-      expect(keep).not.toContain("auth=none");
+      expect(keep, file).toEqual(facts);
+      expect(keep?.some((c) => c.includes("|")), `${file}: keep[] must not pre-materialise alternatives`).toBe(false);
     }
-    // Alternatives are evaluated by the planner: "email=smtp|resend" holds for email=smtp.
-    expect(keepFor(result, "infra/compose.yaml")).toContain("email=smtp|resend");
+    // Alternatives are evaluated by apply through evaluateCondition, whatever their spelling.
+    expect(evaluateCondition("email=smtp|resend", result.projectJson.modules)).toBe(true);
+    expect(evaluateCondition("email=resend|smtp", result.projectJson.modules)).toBe(true);
 
     expect(result.pomRemove).toEqual([]);
     expect(result.env).toEqual([
@@ -91,7 +91,9 @@ describe("plan(input) — mini-starter (CLAUDE.md 4.3 / 4.4 / 4.5)", () => {
     expect(keep).toEqual(expect.arrayContaining(["auth=none", "auth!=jwt"]));
     expect(keep).not.toContain("auth=jwt");
     expect(keep).not.toContain("auth!=none");
-    expect(keepFor(result, "infra/compose.yaml")).toContain("email=smtp|resend");
+    expect(keep?.some((c) => c.includes("|"))).toBe(false);
+    expect(evaluateCondition("email=smtp|resend", result.projectJson.modules)).toBe(true);
+    expect(evaluateCondition("email=resend|smtp", result.projectJson.modules)).toBe(true);
   });
 
   it("AC3: frontend=none drops apps/web/** and pnpm-workspace.yaml, postSteps still lists mvn-resolve", () => {
@@ -105,7 +107,7 @@ describe("plan(input) — mini-starter (CLAUDE.md 4.3 / 4.4 / 4.5)", () => {
     expect(keepFor(result, "package.json")).toContain("frontend=none");
   });
 
-  it("AC2b: email=none removes smtp coords and the email=smtp|resend alternative is not kept", () => {
+  it("AC2b: email=none removes smtp coords and the email=smtp|resend alternative evaluates to false", () => {
     const result = plan(miniStarterInput({ ...DEFAULTS, email: "none" }));
     expect(result.pomRemove).toEqual([
       { file: "apps/api/pom.xml", coords: "org.springframework.boot:spring-boot-starter-mail" },
@@ -115,8 +117,10 @@ describe("plan(input) — mini-starter (CLAUDE.md 4.3 / 4.4 / 4.5)", () => {
       { key: "JWT_ACCESS_TTL", value: "" },
     ]);
     const keep = keepFor(result, "infra/compose.yaml");
-    expect(keep).not.toContain("email=smtp|resend");
     expect(keep).toEqual(expect.arrayContaining(["email=none", "email!=smtp", "email!=resend"]));
+    expect(keep?.some((c) => c.includes("|"))).toBe(false);
+    expect(evaluateCondition("email=smtp|resend", result.projectJson.modules)).toBe(false);
+    expect(evaluateCondition("email=resend|smtp", result.projectJson.modules)).toBe(false);
   });
 });
 
