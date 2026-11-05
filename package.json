@@ -5,7 +5,8 @@
   "license": "Apache-2.0",
   "type": "module",
   "bin": {
-    "create-forge-app": "bin/create.mjs"
+    "create-forge-app": "bin/create.mjs",
+    "forge": "bin/create.mjs"
   },
   "files": [
     "bin",
@@ -22,7 +23,8 @@
     "test:watch": "vitest",
     "check": "tsc --noEmit",
     "lint": "eslint .",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "pnpm build && pnpm test"
   },
   "dependencies": {
     "@clack/prompts": "^0.11.0",
