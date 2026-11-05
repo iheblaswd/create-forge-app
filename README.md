@@ -6,8 +6,9 @@ Generate a production-ready **Spring Boot 3 (Spring Modulith, Clean Architecture
 Next.js 15** application with only the modules you choose, then **add, remove and upgrade** those
 modules later without losing your code.
 
-> **Status: early development.** Nothing is published on npm yet and the CLI does not generate a
-> project yet. See [Status](#status) for what exists today and what comes next.
+> **Status: early development.** The CLI generates real projects from a starter folder
+> (`--template-dir`), but nothing is published on npm yet and the real `forge-starter` does not
+> exist yet. See [Status](#status) and [GUIDE.md](GUIDE.md) (French) to try it today.
 
 ## Why
 
@@ -25,9 +26,17 @@ cannot be updated once you modify the output; a GitHub template never updates at
 - The CLI **never deletes or overwrites a user file**, and rolls back completely on failure.
 - Zero cost end to end: open source (Apache-2.0), public repos, free tiers only.
 
-## Quick start (target)
+## Quick start
 
-The commands below are the target interface. They are **not functional yet**.
+Today, from a clone of this repository (no npm release yet):
+
+```sh
+pnpm install && pnpm build
+node bin/create.mjs my-app --template-dir test/fixtures/mini-starter --dry-run   # show the plan
+node bin/create.mjs my-app --template-dir test/fixtures/mini-starter -y --no-install
+```
+
+Target, once the starter and the npm package are released:
 
 ```sh
 pnpm dlx create-forge-app my-app        # or: npx create-forge-app my-app
@@ -54,7 +63,10 @@ variables and its `requires` on other options. Files shared by several options u
 blocks* (`<!-- forge:if auth=jwt -->`, `# forge:if email=smtp`, `// forge:if frontend=next`) that
 the CLI keeps or strips, always removing the markers.
 
-## Options (target)
+## Options
+
+`add`, `remove`, `upgrade`, `status` and `doctor` are announced but not implemented yet
+(Étapes 4 and 5); the create command and every option below work.
 
 ```
 forge my-app [--auth jwt|none] [--email smtp|none] [--frontend next|none] [--deploy docker]
@@ -116,14 +128,16 @@ word *Étape*.
 
 - **Étape 1 — Manifest + planner: done.** Pure core with no disk access: manifest loading and
   validation, selection resolution, planner producing a Plan, `mini-starter` test fixture
-  covering every block type and module, unit tests on `all`, `auth=none`, `frontend=none` and
-  `email=none` selections, CI on GitHub Actions. Plan snapshots for every module combination are
-  the next planner task. `bin/create.mjs` only prints the package name and version.
-- **Étape 2 — Execution and CLI: next.** `core/sources` (local dir, bundled tarball, GitHub ref),
-  `core/apply` with rollback, Java package renaming, `commander` + `@clack/prompts`, `--dry-run`,
-  post-install steps (`git init`, `pnpm install`, `mvn dependency:resolve`), integration tests on
-  `mini-starter`.
-- **Étape 3** — the real `forge-starter v0.1.0` and first npm publication.
+  covering every block type and module, Plan snapshots for `all`, `auth=none`, `frontend=none`
+  and `all none` (`test/unit/__snapshots__`).
+- **Étape 2 — Execution and CLI: done.** `core/sources` (local dir, bundled `template/` +
+  `template.lock.json`, GitHub `--ref` pinned to a commit), `core/apply` (temporary folder, atomic
+  move, full rollback, conditional blocks, `pom.xml` through `fast-xml-parser`, `.env.local` with
+  generated secrets, `.forge/project.json`), Java package and project renaming, `commander` +
+  `@clack/prompts`, `--dry-run`, post steps (`pnpm install`, `mvn dependency:resolve`, `git init`
+  + first commit), integration tests generating the four combinations on disk.
+- **Étape 3 — next:** the real `forge-starter v0.1.0` (separate repository), bundled with
+  `scripts/bundle-template.mjs`, and the first npm publication.
 - **Étape 4 and 5** — `status`, `doctor`, `upgrade`, then `add` / `remove` with three-way merge.
 
 ## Development
@@ -137,26 +151,26 @@ pnpm test     # vitest
 pnpm check    # tsc --noEmit
 pnpm lint     # eslint
 pnpm build    # tsc -p tsconfig.build.json → dist/
-node bin/create.mjs
+node bin/create.mjs --help
 ```
 
 Layout:
 
 ```
 bin/create.mjs            entry point
-src/cli/                  commander, prompts, output (placeholder, Étape 2)
+src/cli/                  commander, prompts, output
 src/core/manifest/        forge.template.json loading + zod validation
-src/core/sources/         bundled | local dir (--template-dir) | github (--ref) (placeholder, Étape 2)
+src/core/sources/         bundled | local dir (--template-dir) | github (--ref)
 src/core/selection/       flags + defaults + requires → Selection
 src/core/planner/         manifest + selection + file list → Plan (pure)
-src/core/apply/           executes a Plan (placeholder, Étape 2)
+src/core/apply/           executes a Plan: blocks, pom.xml, env, renaming, rollback (disk via FsPort)
 src/core/merge/           three-way merge for upgrade / add / remove (placeholder, Étape 5)
-src/steps/                git init, pnpm install, mvn dependency:resolve (placeholder, Étape 2)
-src/utils/                fs, process, naming, hashing (placeholder, Étape 2)
-scripts/bundle-template.mjs   bundles the pinned starter release (does not exist yet, Étape 3)
-test/unit/                planner, selection, manifest — no disk access
+src/steps/                pnpm install, mvn dependency:resolve, git init
+src/utils/                real FsPort (node:fs) and process helpers
+scripts/bundle-template.mjs   bundles a starter release into template/ + template.lock.json
+test/unit/                planner (+ snapshots), selection, manifest, blocks, pom, env, apply (in-memory fs)
 test/fixtures/mini-starter/   ~15-file fake starter used by the tests
-test/integration/         real generation runs (placeholder, Étape 2)
+test/integration/         real generation runs on disk from mini-starter
 ```
 
 Rules:
