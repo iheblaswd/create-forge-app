@@ -1,0 +1,746 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plan snapshots — mini-starter, 4 combinations > all 1`] = `
+{
+  "conditional": [
+    {
+      "file": "README.md",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/pom.xml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/src/main/resources/application.yml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "env.example",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "infra/compose.yaml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "package.json",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "pom.xml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+  ],
+  "copy": [
+    {
+      "from": "README.md",
+      "to": "README.md",
+    },
+    {
+      "from": "apps/api/Dockerfile",
+      "to": "apps/api/Dockerfile",
+    },
+    {
+      "from": "apps/api/pom.xml",
+      "to": "apps/api/pom.xml",
+    },
+    {
+      "from": "apps/api/src/main/java/com/forge/starter/auth/domain/entities/User.java",
+      "to": "apps/api/src/main/java/com/forge/starter/auth/domain/entities/User.java",
+    },
+    {
+      "from": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+      "to": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+    },
+    {
+      "from": "apps/api/src/main/resources/application.yml",
+      "to": "apps/api/src/main/resources/application.yml",
+    },
+    {
+      "from": "apps/web/middleware.ts",
+      "to": "apps/web/middleware.ts",
+    },
+    {
+      "from": "apps/web/src/app/page.tsx",
+      "to": "apps/web/src/app/page.tsx",
+    },
+    {
+      "from": "apps/web/src/lib/env.ts",
+      "to": "apps/web/src/lib/env.ts",
+    },
+    {
+      "from": "env.example",
+      "to": "env.example",
+    },
+    {
+      "from": "infra/compose.prod.yaml",
+      "to": "infra/compose.prod.yaml",
+    },
+    {
+      "from": "infra/compose.yaml",
+      "to": "infra/compose.yaml",
+    },
+    {
+      "from": "package.json",
+      "to": "package.json",
+    },
+    {
+      "from": "pnpm-workspace.yaml",
+      "to": "pnpm-workspace.yaml",
+    },
+    {
+      "from": "pom.xml",
+      "to": "pom.xml",
+    },
+  ],
+  "env": [
+    {
+      "key": "JWT_SECRET",
+      "value": "",
+    },
+    {
+      "key": "JWT_ACCESS_TTL",
+      "value": "",
+    },
+    {
+      "key": "SMTP_HOST",
+      "value": "",
+    },
+    {
+      "key": "SMTP_PORT",
+      "value": "",
+    },
+  ],
+  "pomRemove": [],
+  "postSteps": [
+    "git-init",
+    "pnpm-install",
+    "mvn-resolve",
+  ],
+  "projectJson": {
+    "cliVersion": "0.0.0-test",
+    "modules": {
+      "auth": "jwt",
+      "deploy": "docker",
+      "email": "smtp",
+      "frontend": "next",
+    },
+    "starter": {
+      "commit": "0000000",
+      "ref": "v1",
+      "repo": "forge/mini-starter",
+    },
+  },
+}
+`;
+
+exports[`plan snapshots — mini-starter, 4 combinations > all none 1`] = `
+{
+  "conditional": [
+    {
+      "file": "README.md",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=none",
+        "email!=smtp",
+        "email!=resend",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/pom.xml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=none",
+        "email!=smtp",
+        "email!=resend",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/src/main/resources/application.yml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=none",
+        "email!=smtp",
+        "email!=resend",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "env.example",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=none",
+        "email!=smtp",
+        "email!=resend",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "infra/compose.yaml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=none",
+        "email!=smtp",
+        "email!=resend",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "package.json",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=none",
+        "email!=smtp",
+        "email!=resend",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "pom.xml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=none",
+        "email!=smtp",
+        "email!=resend",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+  ],
+  "copy": [
+    {
+      "from": "README.md",
+      "to": "README.md",
+    },
+    {
+      "from": "apps/api/Dockerfile",
+      "to": "apps/api/Dockerfile",
+    },
+    {
+      "from": "apps/api/pom.xml",
+      "to": "apps/api/pom.xml",
+    },
+    {
+      "from": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+      "to": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+    },
+    {
+      "from": "apps/api/src/main/resources/application.yml",
+      "to": "apps/api/src/main/resources/application.yml",
+    },
+    {
+      "from": "env.example",
+      "to": "env.example",
+    },
+    {
+      "from": "infra/compose.prod.yaml",
+      "to": "infra/compose.prod.yaml",
+    },
+    {
+      "from": "infra/compose.yaml",
+      "to": "infra/compose.yaml",
+    },
+    {
+      "from": "package.json",
+      "to": "package.json",
+    },
+    {
+      "from": "pom.xml",
+      "to": "pom.xml",
+    },
+  ],
+  "env": [],
+  "pomRemove": [
+    {
+      "coords": "io.jsonwebtoken:jjwt-api",
+      "file": "apps/api/pom.xml",
+    },
+    {
+      "coords": "org.springframework.boot:spring-boot-starter-mail",
+      "file": "apps/api/pom.xml",
+    },
+    {
+      "coords": "org.springframework.boot:spring-boot-starter-security",
+      "file": "apps/api/pom.xml",
+    },
+  ],
+  "postSteps": [
+    "git-init",
+    "pnpm-install",
+    "mvn-resolve",
+  ],
+  "projectJson": {
+    "cliVersion": "0.0.0-test",
+    "modules": {
+      "auth": "none",
+      "deploy": "docker",
+      "email": "none",
+      "frontend": "none",
+    },
+    "starter": {
+      "commit": "0000000",
+      "ref": "v1",
+      "repo": "forge/mini-starter",
+    },
+  },
+}
+`;
+
+exports[`plan snapshots — mini-starter, 4 combinations > auth=none 1`] = `
+{
+  "conditional": [
+    {
+      "file": "README.md",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/pom.xml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/src/main/resources/application.yml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "env.example",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "infra/compose.yaml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "package.json",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "pom.xml",
+      "keep": [
+        "auth=none",
+        "auth!=jwt",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=next",
+        "frontend!=none",
+        "deploy=docker",
+      ],
+    },
+  ],
+  "copy": [
+    {
+      "from": "README.md",
+      "to": "README.md",
+    },
+    {
+      "from": "apps/api/Dockerfile",
+      "to": "apps/api/Dockerfile",
+    },
+    {
+      "from": "apps/api/pom.xml",
+      "to": "apps/api/pom.xml",
+    },
+    {
+      "from": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+      "to": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+    },
+    {
+      "from": "apps/api/src/main/resources/application.yml",
+      "to": "apps/api/src/main/resources/application.yml",
+    },
+    {
+      "from": "apps/web/src/app/page.tsx",
+      "to": "apps/web/src/app/page.tsx",
+    },
+    {
+      "from": "apps/web/src/lib/env.ts",
+      "to": "apps/web/src/lib/env.ts",
+    },
+    {
+      "from": "env.example",
+      "to": "env.example",
+    },
+    {
+      "from": "infra/compose.prod.yaml",
+      "to": "infra/compose.prod.yaml",
+    },
+    {
+      "from": "infra/compose.yaml",
+      "to": "infra/compose.yaml",
+    },
+    {
+      "from": "package.json",
+      "to": "package.json",
+    },
+    {
+      "from": "pnpm-workspace.yaml",
+      "to": "pnpm-workspace.yaml",
+    },
+    {
+      "from": "pom.xml",
+      "to": "pom.xml",
+    },
+  ],
+  "env": [
+    {
+      "key": "SMTP_HOST",
+      "value": "",
+    },
+    {
+      "key": "SMTP_PORT",
+      "value": "",
+    },
+  ],
+  "pomRemove": [
+    {
+      "coords": "io.jsonwebtoken:jjwt-api",
+      "file": "apps/api/pom.xml",
+    },
+    {
+      "coords": "org.springframework.boot:spring-boot-starter-security",
+      "file": "apps/api/pom.xml",
+    },
+  ],
+  "postSteps": [
+    "git-init",
+    "pnpm-install",
+    "mvn-resolve",
+  ],
+  "projectJson": {
+    "cliVersion": "0.0.0-test",
+    "modules": {
+      "auth": "none",
+      "deploy": "docker",
+      "email": "smtp",
+      "frontend": "next",
+    },
+    "starter": {
+      "commit": "0000000",
+      "ref": "v1",
+      "repo": "forge/mini-starter",
+    },
+  },
+}
+`;
+
+exports[`plan snapshots — mini-starter, 4 combinations > frontend=none 1`] = `
+{
+  "conditional": [
+    {
+      "file": "README.md",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/pom.xml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "apps/api/src/main/resources/application.yml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "env.example",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "infra/compose.yaml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "package.json",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+    {
+      "file": "pom.xml",
+      "keep": [
+        "auth=jwt",
+        "auth!=none",
+        "email=smtp",
+        "email!=resend",
+        "email!=none",
+        "frontend=none",
+        "frontend!=next",
+        "deploy=docker",
+      ],
+    },
+  ],
+  "copy": [
+    {
+      "from": "README.md",
+      "to": "README.md",
+    },
+    {
+      "from": "apps/api/Dockerfile",
+      "to": "apps/api/Dockerfile",
+    },
+    {
+      "from": "apps/api/pom.xml",
+      "to": "apps/api/pom.xml",
+    },
+    {
+      "from": "apps/api/src/main/java/com/forge/starter/auth/domain/entities/User.java",
+      "to": "apps/api/src/main/java/com/forge/starter/auth/domain/entities/User.java",
+    },
+    {
+      "from": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+      "to": "apps/api/src/main/java/com/forge/starter/shared/domain/entities/BaseEntity.java",
+    },
+    {
+      "from": "apps/api/src/main/resources/application.yml",
+      "to": "apps/api/src/main/resources/application.yml",
+    },
+    {
+      "from": "env.example",
+      "to": "env.example",
+    },
+    {
+      "from": "infra/compose.prod.yaml",
+      "to": "infra/compose.prod.yaml",
+    },
+    {
+      "from": "infra/compose.yaml",
+      "to": "infra/compose.yaml",
+    },
+    {
+      "from": "package.json",
+      "to": "package.json",
+    },
+    {
+      "from": "pom.xml",
+      "to": "pom.xml",
+    },
+  ],
+  "env": [
+    {
+      "key": "JWT_SECRET",
+      "value": "",
+    },
+    {
+      "key": "JWT_ACCESS_TTL",
+      "value": "",
+    },
+    {
+      "key": "SMTP_HOST",
+      "value": "",
+    },
+    {
+      "key": "SMTP_PORT",
+      "value": "",
+    },
+  ],
+  "pomRemove": [],
+  "postSteps": [
+    "git-init",
+    "pnpm-install",
+    "mvn-resolve",
+  ],
+  "projectJson": {
+    "cliVersion": "0.0.0-test",
+    "modules": {
+      "auth": "jwt",
+      "deploy": "docker",
+      "email": "smtp",
+      "frontend": "none",
+    },
+    "starter": {
+      "commit": "0000000",
+      "ref": "v1",
+      "repo": "forge/mini-starter",
+    },
+  },
+}
+`;
